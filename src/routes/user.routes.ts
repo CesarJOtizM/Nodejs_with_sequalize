@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import {
   createUser,
   findAll,
@@ -8,7 +8,7 @@ import {
 } from '../controllers/user.controller';
 
 export const userRouter = (app: any) => {
-  const router = express.Router();
+  const router = Router();
 
   router.post('/', createUser);
   router.get('/', findAll);
