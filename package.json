@@ -1,25 +1,17 @@
 {
-  "name": "kamionifyserver",
+  "name": "node-sql-docker",
   "version": "1.0.0",
-  "description": "",
+  "description": "this is a deploy with docker",
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/server.ts",
     "dev": "DEBUG=app:*NODE_ENV=environment nodemon",
-    "start:prod": "npm run build && NODE_ENV=production node ./dist/src/server.js",
+    "start:prod": "npm run build && NODE_ENV=production node ./dist/server.js",
     "build": "npx tsc"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://CesarJOrtizM@bitbucket.org/rt-solutions-dev/kamionifyserver.git"
-  },
   "keywords": [],
-  "author": "",
+  "author": "Cesar Ortiz",
   "license": "ISC",
-  "bugs": {
-    "url": "https://bitbucket.org/rt-solutions-dev/kamionifyserver/issues"
-  },
-  "homepage": "https://bitbucket.org/rt-solutions-dev/kamionifyserver#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

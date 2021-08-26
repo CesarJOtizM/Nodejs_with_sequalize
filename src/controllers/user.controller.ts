@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { user } from '../models/user.model';
 import { Op } from 'sequelize';
+import { user } from '../models/user.model';
 
 export const createUser = async (req: Request, res: Response) => {
   if (!req.body) {
@@ -13,11 +13,11 @@ export const createUser = async (req: Request, res: Response) => {
 
   const User = {
     ...req.body,
-    id: id,
-    nombre: nombre,
-    apellido: apellido,
-    celular: celular,
-    identificacion: identificacion,
+    id,
+    nombre,
+    apellido,
+    celular,
+    identificacion,
   };
 
   try {
@@ -31,9 +31,9 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const findAll = async (req: Request, res: Response) => {
-  const celular = req.query.celular;
+  const { celular } = req.query;
 
-  let condition = celular
+  const condition = celular
     ? { celular: { [Op.like]: `%${celular}%` } }
     : undefined;
 
@@ -48,13 +48,13 @@ export const findAll = async (req: Request, res: Response) => {
 };
 
 export const findOne = async (req: Request, res: Response) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   try {
     const data = await user.findByPk(id);
     res.send({
       status: 200,
-      datos: data ? data : `User with id: ${id} not found`,
+      datos: data || `User with id: ${id} not found`,
     });
   } catch (error) {
     res.status(500).send({
@@ -64,13 +64,13 @@ export const findOne = async (req: Request, res: Response) => {
 };
 
 export const update = async (req: Request, res: Response) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   try {
     const data = await user.update(req.body, {
-      where: { id: id },
+      where: { id },
     });
-    if (data[0] == 1) {
+    if (data[0] === 1) {
       res.send({
         status: 200,
         message: `User with id: ${id} was updated successfully.`,
@@ -83,19 +83,19 @@ export const update = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(500).send({
-      message: error || 'Error updating User with id=' + id,
+      message: error || `Error updating User with id=${id}`,
     });
   }
 };
 
 export const removeOne = async (req: Request, res: Response) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   try {
     const data = await user.destroy({
-      where: { id: id },
+      where: { id },
     });
-    if (data == 1) {
+    if (data === 1) {
       res.send({
         status: 200,
         message: `User with id: ${id} was deleted successfully.`,
@@ -108,7 +108,7 @@ export const removeOne = async (req: Request, res: Response) => {
     }
   } catch (error) {
     res.status(500).send({
-      message: error || 'Error updating User with id=' + id,
+      message: error || `Error updating User with id=${id}`,
     });
   }
 };
