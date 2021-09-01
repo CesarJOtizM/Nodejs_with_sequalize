@@ -3,14 +3,10 @@ import sequelize from '../config/database.config';
 
 interface UserAttributes {
   id: number;
-  nombre: string;
-  apellido: string;
-  celular: number;
-  identificacion: number;
+  name: string;
+  lastName: string;
+  password: string;
   email: string;
-  foto: string;
-  salario: number;
-  comisión: number;
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
@@ -19,60 +15,52 @@ interface UserInstance
   extends Model<UserAttributes, UserCreationAttributes>,
     UserAttributes {}
 
-export const user = sequelize.define<UserInstance>('usuario', {
+export const User = sequelize.define<UserInstance>('User', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
 
-  nombre: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
       notEmpty: { msg: 'Debe tener un valor' },
+      isAlpha: { msg: 'Solo debe tener letras' },
+      len: {
+        args: [2, 255],
+        msg: 'El nombre tiene que ser como mínimo de dos caracteres',
+      },
     },
   },
 
-  apellido: {
+  lastName: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
       notEmpty: { msg: 'Debe tener un valor' },
+      isAlpha: { msg: 'Solo debe tener letras' },
+      len: {
+        args: [2, 255],
+        msg: 'El nombre tiene que ser como mínimo de dos caracteres',
+      },
     },
   },
-  celular: {
-    type: DataTypes.INTEGER,
+
+  password: {
+    type: DataTypes.STRING,
     unique: true,
     allowNull: false,
-    validate: {
-      notEmpty: { msg: 'Debe tener un valor' },
-      isNumeric: { msg: 'Deben ser números' },
-    },
   },
-  identificacion: {
-    type: DataTypes.INTEGER,
-    unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: { msg: 'Debe tener un valor' },
-      isNumeric: { msg: 'Deben ser números' },
-    },
-  },
+
   email: {
     type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
     validate: {
       notEmpty: { msg: 'Debe tener un valor' },
       isEmail: { msg: 'Deber ser un email valido' },
     },
-  },
-  foto: {
-    type: DataTypes.STRING,
-  },
-  salario: {
-    type: DataTypes.INTEGER,
-  },
-  comisión: {
-    type: DataTypes.INTEGER,
   },
 });

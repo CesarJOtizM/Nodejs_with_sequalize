@@ -1,5 +1,5 @@
 import app from './app';
-import { config } from './config/ConfigDB';
+import { config } from './config/configDB';
 
 function Main() {
   app.listen(config.port);

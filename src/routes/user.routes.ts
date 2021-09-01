@@ -1,20 +1,11 @@
 import { Router } from 'express';
-import {
-  createUser,
-  findAll,
-  findOne,
-  update,
-  removeOne,
-} from '../controllers/user.controller';
+import { createUser, singIn } from '../controllers/authController';
 
 export const userRouter = (app: any) => {
   const router = Router();
 
   router.post('/', createUser);
-  router.get('/', findAll);
-  router.get('/:id', findOne);
-  router.put('/:id', update);
-  router.delete('/:id', removeOne);
+  router.post('/login', singIn);
 
-  app.use('/user', router);
+  app.use('/api/user', router);
 };
